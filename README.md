@@ -45,11 +45,14 @@ python -m pip check
 
 ### Models
 
-Download **MiniMax-H3 Ref2VA** in Diffusers format and the pinned **TAEH3**
-source and weights. Use the same model versions for data encoding and generation.
+Place the **Stage2 CARVE DiT checkpoint**, **MiniMax-H3 Ref2VA** model in
+Diffusers format and pinned **TAEH3** source and weights under `models/`.
+The CARVE checkpoint will be available on Hugging Face soon. Use the same
+model versions for data encoding and generation.
 
 | Model | Download | Local directory | Version |
 | --- | --- | --- | --- |
+| CARVE DiT | Hugging Face — coming soon | `models/CARVE/` | Stage2 |
 | MiniMax-H3 | [Official Hugging Face repository](https://huggingface.co/MiniMaxAI/MiniMax-H3) · [Ref2VA files](https://huggingface.co/MiniMaxAI/MiniMax-H3/tree/main/Ref2VA) | `models/Ref2VA/` | Ref2VA / Diffusers |
 | TAEH3 | [Pinned upstream repository](https://github.com/madebyollin/taehv/tree/011dfc2112197741c540e0bdd5b7b67bcc930771) · [taehv.py](https://raw.githubusercontent.com/madebyollin/taehv/011dfc2112197741c540e0bdd5b7b67bcc930771/taehv.py) · [taeh3.safetensors](https://raw.githubusercontent.com/madebyollin/taehv/011dfc2112197741c540e0bdd5b7b67bcc930771/safetensors/taeh3.safetensors) | `models/taeh3/` | Commit `011dfc2112197741c540e0bdd5b7b67bcc930771` |
 
@@ -58,6 +61,7 @@ source and weights. Use the same model versions for data encoding and generation
 
 ```text
 models/
+├── CARVE/                   # Stage2 CARVE checkpoint
 ├── Ref2VA/
 │   ├── transformer_ref/
 │   ├── text_encoder/
@@ -89,7 +93,7 @@ then start the demo in generation mode:
 
 ```bash
 python -m playwright install chromium
-export CWM_CHECKPOINT="$PWD/outputs/stage2/checkpoint-001000"
+export CWM_CHECKPOINT="$PWD/models/CARVE"
 export CWM_TAEH3_ASSETS="$PWD/models/taeh3"
 python -m demo.server --generate --port 8080
 ```
@@ -110,9 +114,9 @@ is **960 × 544** at **24 fps**.
 # Set these paths to your own inputs and downloaded model assets.
 PROXY_VIDEO=/path/to/proxy.mp4                 # Coarse or fine semantic proxy, 24 fps
 REFERENCE_IMAGE=/path/to/reference.png         # Appearance reference of the same scene
-CARVE_CHECKPOINT=/path/to/stage2/checkpoint    # Stage2 CARVE checkpoint directory
-H3_MODEL_DIR=/path/to/Ref2VA                   # H3 Ref2VA model in Diffusers format
-TAEH3_ASSETS=/path/to/taeh3                   # taehv.py and taeh3.safetensors
+CARVE_CHECKPOINT=models/CARVE                  # Stage2 CARVE checkpoint directory
+H3_MODEL_DIR=models/Ref2VA                     # H3 Ref2VA model in Diffusers format
+TAEH3_ASSETS=models/taeh3                      # taehv.py and taeh3.safetensors
 OUTPUT_DIR=outputs/inference/sample-000        # Empty output directory
 
 torchrun --standalone --nproc_per_node=8 -m carve infer \
