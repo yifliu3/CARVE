@@ -1,0 +1,5 @@
+# No torch stack upgrades. Install in the existing release environment.
+# Mesh formats other than NPZ:
+trimesh==4.7.4
+# Server-side proxy rendering:
+playwright==1.63.0

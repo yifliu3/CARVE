@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CARVE: Proxy-Guided Causal Diffusion Rendering with Coding Agents.">
+  <title>CARVE v4 Token Demo</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header><strong title="Proxy-Guided Causal Diffusion Rendering with Coding Agents">CARVE v4</strong><span>Causal diffusion rendering</span><output id="status">Connecting</output></header>
+  <main>
+    <aside>
+      <h1>Scene</h1>
+      <select id="scenes" aria-label="Scene"></select>
+      <form id="upload">
+        <label>Mesh<input id="mesh" name="asset" type="file" accept=".glb,.obj,.ply,.stl,.npz,.zip" required></label>
+        <div class="fields">
+          <label>Up axis<select name="up_axis"><option value="z">Z up</option><option value="y">Y up</option></select></label>
+          <label>Units<select name="units"><option value="m">Meters</option><option value="cm">Centimeters</option><option value="mm">Millimeters</option></select></label>
+        </div>
+        <label>Appearance reference<input name="reference" type="file" accept="image/png,image/jpeg,image/webp"></label>
+        <label>Prepared reference<input name="static" type="file" accept=".safetensors"></label>
+        <button type="submit">Import asset</button>
+      </form>
+      <h2>Trajectory</h2>
+      <label>Speed <output id="speed-value">0.4 m/s</output><input id="speed" type="range" min="0.1" max="0.6" step="0.1" value="0.4"></label>
+      <div class="tools">
+        <button id="record" title="Start or pause recording" aria-label="Record or pause">&#9679;</button>
+        <button id="replay" title="Replay trajectory" aria-label="Replay">&#9654;</button>
+        <button id="clear" title="Clear trajectory" aria-label="Clear">&#8634;</button>
+        <button id="export" title="Export trajectory" aria-label="Export">&#8595;</button>
+        <label class="icon-file" title="Import trajectory"><span aria-hidden="true">&#8593;</span><input id="import" type="file" accept=".json" aria-label="Import trajectory"></label>
+      </div>
+      <output id="frames">0 frames / 0.00 s</output>
+      <div class="commands">
+        <button id="prepare" disabled>Prepare reference</button>
+        <button id="encode" disabled>Encode tokens</button>
+        <button id="generate" disabled>Generate video</button>
+        <button id="stop">End session</button>
+      </div>
+    </aside>
+    <section>
+      <div class="scene-title"><h2 id="scene-name">Calibration room</h2><span id="scene-kind">Preview only</span></div>
+      <canvas id="canvas" width="960" height="544" tabindex="0" aria-label="Interactive proxy view"></canvas>
+      <div class="readouts"><output id="pose">X 0.00 · Y 0.00 · Z 0.00</output><output id="mode">Idle</output></div>
+      <h2>Artifacts</h2>
+      <div id="results"></div>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

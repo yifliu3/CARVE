@@ -1,0 +1,17 @@
+# Install the CUDA PyTorch wheels first, as described in README.md.
+torch==2.6.0
+torchvision==0.21.0
+diffusers==0.40.0
+transformers==5.12.1
+peft==0.20.0
+huggingface-hub==1.33.0
+safetensors==0.8.0
+accelerate==1.10.1
+numpy>=1.26,<3
+PyYAML>=6.0,<7
+Pillow>=10,<12
+av>=15,<17
+einops==0.8.0
+imageio==2.37.4
+imageio-ffmpeg==0.6.0
+tensorboard==2.19.0

@@ -1,0 +1,12 @@
+schema: cwm-h3.run.v1
+stage: causal_tf_anyflow
+checkpoint:
+  initialize: outputs/stage0p5/checkpoint-002000
+  initialize_weights: live
+train:
+  max_steps: 800
+  learning_rate: 0.00003
+  warmup_steps: 100
+runtime:
+  output_dir: outputs/stage1
+  tensorboard_dir: outputs/tensorboard/stage1

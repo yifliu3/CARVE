@@ -1,0 +1,40 @@
+SolarWM
+Copyright 2026 SolarWM Contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+--------------------------------------------------------------------------------
+Third-party source included in this repository
+--------------------------------------------------------------------------------
+
+This release retains SolarWM's H3 geometry/layout/distributed utilities,
+FP32-master optimizer, AnyFlow conditioning/loss and SGF objective helpers.
+The H3 adapter is modified for independent proxy tokens and segmented causal
+attention. Wan/LTX backends and PRoPE source are not included in this release.
+
+--------------------------------------------------------------------------------
+Backbones and weights
+--------------------------------------------------------------------------------
+
+Model weights and backbone packages are NOT distributed here and carry their own
+terms, several of which are not Apache-2.0. Obtain each from its publisher and
+check its licence before redistributing anything you produce:
+
+  MiniMax-H3, Qwen3-VL and TAEH3; each keeps its publisher's terms.
+
+--------------------------------------------------------------------------------
+Data
+--------------------------------------------------------------------------------
+
+No training dataset or scene asset is distributed here. The fixed semantic
+palette is included for reproducing proxy colors. The bundled demo room is
+synthetic preview geometry. External datasets retain their original terms.
+
+--------------------------------------------------------------------------------
+CARVE static-scene adaptation (2026-09-25)
+--------------------------------------------------------------------------------
+
+Derived from SolarWM ce1da4e7705391eda8eeda6016c0fd3f614b975e.
+Adds src/carve, CARVE configs/docs/tests and modifies the H3 attention
+adapter and distributed utilities for proxy-aware causal execution and Gloo
+validation. This release exposes the v4 colored uniform TAEH3 token architecture.

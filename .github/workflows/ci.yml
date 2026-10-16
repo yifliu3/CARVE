@@ -1,0 +1,42 @@
+name: release-checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12"]
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      CUDA_VISIBLE_DEVICES: ""
+      OMP_NUM_THREADS: "2"
+      HF_HUB_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install CPU release dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install torch==2.6.0 torchvision==0.21.0 \
+            --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[dev,demo]'
+          python -m pip check
+          python -c 'import torch; assert torch.__version__.startswith("2.6.0"); assert torch.version.cuda is None'
+      - name: Lint release sources
+        run: ruff check src demo
+      - name: Check package and CLI
+        run: |
+          python -m carve --help
+          python -m carve resolve --config configs/inference.yaml

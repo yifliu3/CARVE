@@ -1,0 +1,17 @@
+schema: cwm-h3.run.v1
+stage: causal_dmd_sgf
+checkpoint:
+  initialize: outputs/stage1/checkpoint-000800
+  teacher: outputs/stage0p5/checkpoint-002000
+  initialize_weights: live
+  teacher_weights: live
+train:
+  max_steps: 1000
+  learning_rate: 0.000002
+  weight_decay: 0.0
+  grad_clip: 10.0
+  warmup_steps: 0
+runtime:
+  optimizer_state_offload: true
+  output_dir: outputs/stage2
+  tensorboard_dir: outputs/tensorboard/stage2

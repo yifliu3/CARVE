@@ -1,0 +1,23 @@
+schema: cwm-h3.run.v1
+stage: bidirectional_fm
+model:
+  checkpoint: models/Ref2VA
+  checkpoint_id: minimax-h3-ref2va-hymm-ef520db195ef3286
+  lora_rank: 512
+  lora_alpha: 512
+  proxy_conditioning: tae_tokens
+  proxy_projection_trainable: false
+  proxy_input_height: 352
+  proxy_input_width: 608
+data:
+  manifest: data/encoded/manifest.jsonl
+  split: train
+  qwen_dynamic_proxy: false
+  qwen_proxy_scope: reference_only
+  visual_encoder: taeh3
+  proxy_variant: mixed
+distributed:
+  sp_size: 8
+runtime:
+  output_dir: outputs/stage0p5
+  tensorboard_dir: outputs/tensorboard/stage0p5

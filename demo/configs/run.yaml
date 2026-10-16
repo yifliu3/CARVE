@@ -1,0 +1,12 @@
+schema: cwm-h3.run.v1
+stage: causal_dmd_sgf
+model:
+  activation_checkpointing: false
+  attention_checkpointing: false
+data:
+  split: test
+  visual_encoder: taeh3
+  proxy_variant: mixed
+runtime:
+  output_dir: outputs/demo
+  optimizer_state_offload: false

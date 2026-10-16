@@ -1,0 +1,8 @@
+schema: cwm-h3.run.v1
+stage: causal_dmd_sgf
+data:
+  split: test
+  visual_encoder: taeh3
+  proxy_variant: mixed
+runtime:
+  output_dir: outputs/inference

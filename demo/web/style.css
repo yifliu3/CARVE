@@ -1,0 +1,53 @@
+:root {font-family: Arial, sans-serif; color:#242b2d; background:#f4f6f5; letter-spacing:0}
+* {box-sizing:border-box}
+body {margin:0}
+header {height:58px; display:flex; align-items:center; gap:18px; padding:0 24px; background:#fff; border-bottom:1px solid #d8dfdc}
+header strong {font-size:22px; color:#21694c}
+header span {font-size:14px}
+header output {margin-left:auto; color:#53635c; font-size:13px; max-width:45%; overflow-wrap:anywhere}
+main {display:grid; grid-template-columns:260px minmax(0,1fr); max-width:1500px; margin:auto}
+aside {padding:24px; border-right:1px solid #d8dfdc; min-width:0}
+section {padding:24px; min-width:0}
+h1,h2 {font-size:16px; margin:0 0 14px}
+aside h2 {margin-top:28px}
+label {display:block; font-size:12px; color:#52605c; margin-top:15px}
+input,select,button {font:inherit; max-width:100%}
+input[type=file] {display:block; width:100%; margin-top:7px; font-size:11px}
+select {width:100%; border:1px solid #b8c6c0; border-radius:4px; padding:8px; background:#fff; color:#242b2d}
+button {border:1px solid #b8c6c0; border-radius:4px; background:#fff; color:#273e33; padding:8px 10px; cursor:pointer; font-size:13px; min-height:35px}
+button:hover {background:#e8f0eb}
+button:disabled {opacity:.45; cursor:default}
+button:focus-visible,select:focus-visible {outline:2px solid #3173bb; outline-offset:2px}
+form button {width:100%; margin-top:18px}
+.fields {display:grid; grid-template-columns:1fr 1fr; gap:12px}
+input[type=range] {display:block; width:100%; accent-color:#267956; margin:10px 0}
+#speed-value {float:right}
+.tools {display:flex; gap:7px; margin:15px 0 10px}
+.tools button,.icon-file {width:35px; height:35px; flex-shrink:0; padding:6px; text-align:center; font-size:18px}
+.icon-file {position:relative; margin:0; border:1px solid #b8c6c0; border-radius:4px; background:#fff; color:#273e33; overflow:hidden}
+.icon-file input {position:absolute; inset:0; opacity:0; cursor:pointer; margin:0}
+#frames {font-size:12px; color:#53635c}
+.commands {display:grid; gap:8px; margin-top:20px}
+#generate {background:#21694c; color:#fff; border-color:#21694c}
+.scene-title {display:flex; align-items:baseline; gap:18px; min-height:32px; flex-wrap:wrap}
+.scene-title h2 {margin:0}
+.scene-title span {font-size:12px; color:#8a5b31}
+canvas {display:block; width:100%; height:auto; aspect-ratio:960/544; background:#9b9b9b; outline:none}
+canvas:focus {outline:2px solid #267956; outline-offset:2px}
+.readouts {display:flex; justify-content:space-between; gap:15px; margin:12px 0 28px; font-size:12px; color:#53635c; flex-wrap:wrap}
+#results {display:grid; gap:0}
+.result {display:flex; gap:16px; flex-wrap:wrap; padding:12px 0; border-top:1px solid #d8dfdc; font-size:13px}
+.result video {display:block; width:100%; aspect-ratio:960/544; background:#111; object-fit:contain}
+a {color:#2469a0; overflow-wrap:anywhere}
+.error {color:#b12837}
+@media(max-width:700px) {
+ header {padding:0 14px; gap:12px}
+ header span {display:none}
+ main {display:flex; flex-direction:column}
+ section {order:-1; padding:16px}
+ aside {padding:16px; border-right:0; border-top:1px solid #d8dfdc}
+ #upload {display:grid; grid-template-columns:1fr 1fr; gap:0 14px}
+ form button {align-self:end}
+ .commands {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .commands button {font-size:12px; overflow-wrap:anywhere}
+}

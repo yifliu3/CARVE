@@ -1,0 +1,20 @@
+subject_definitions:
+<Subject 1> is the scene depicted in <Picture 1>, which provides its appearance, materials, colors, lighting, and visual style.
+<Picture 1> is the opening-frame reference for [Shot 1].
+
+summary:
+[keyframe completion + reference generation] Generate a continuous video of <Subject 1>, beginning with the composition in <Picture 1> and maintaining its appearance throughout the sequence.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - retain the scene's visual identity, recognizable objects, materials, colors, lighting, and style.
+<Picture 1> ([Shot 1] first frame): fully_preserved - use its composition as the opening-frame reference.
+
+detailed_description:
+The target video follows the visual style, surface materials, color palette, and lighting established by <Picture 1>.
+[Shot 1] Begin with the scene and composition shown in <Picture 1>. Preserve the recognizable appearance of <Subject 1>, including its surface materials, colors, lighting, and visual details. Maintain coherent object identities and appearance throughout the continuous sequence. Render newly visible surfaces consistently with the reference appearance. Keep the visual style consistent from the opening to the end of the shot.
+
+overall_soundscape:
+Silent.
+
+non_diegetic_music:
+No background music.

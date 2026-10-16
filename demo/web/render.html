@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Proxy renderer</title>
+<canvas id="canvas" width="960" height="544"></canvas>
+<script type="module">
+import {ProxyRenderer} from '/render.js';
+window.renderer = new ProxyRenderer(document.querySelector('canvas'));
+window.ready = true;
+</script></html>

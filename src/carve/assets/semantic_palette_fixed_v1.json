@@ -1,0 +1,157 @@
+{
+  "version": "semantic_palette_fixed_v1",
+  "colors": {
+    "wall": [
+      66,
+      111,
+      164
+    ],
+    "roof": [
+      87,
+      117,
+      144
+    ],
+    "column": [
+      99,
+      130,
+      158
+    ],
+    "door": [
+      162,
+      108,
+      72
+    ],
+    "window": [
+      74,
+      151,
+      188
+    ],
+    "floor": [
+      121,
+      105,
+      82
+    ],
+    "book": [
+      192,
+      132,
+      62
+    ],
+    "statue": [
+      142,
+      125,
+      166
+    ],
+    "light": [
+      241,
+      190,
+      62
+    ],
+    "candle": [
+      235,
+      150,
+      62
+    ],
+    "curtain": [
+      161,
+      92,
+      126
+    ],
+    "weapon_display": [
+      178,
+      78,
+      69
+    ],
+    "frame": [
+      98,
+      137,
+      111
+    ],
+    "prop": [
+      128,
+      139,
+      153
+    ],
+    "terrain": [
+      153,
+      125,
+      83
+    ],
+    "vegetation": [
+      70,
+      145,
+      86
+    ],
+    "rock": [
+      125,
+      119,
+      108
+    ],
+    "water": [
+      54,
+      137,
+      196
+    ],
+    "building": [
+      151,
+      105,
+      77
+    ],
+    "road": [
+      112,
+      112,
+      113
+    ],
+    "bridge": [
+      170,
+      120,
+      74
+    ],
+    "fence": [
+      116,
+      91,
+      68
+    ],
+    "furniture": [
+      174,
+      119,
+      75
+    ],
+    "vehicle": [
+      184,
+      75,
+      75
+    ],
+    "unmodeled": [
+      0,
+      0,
+      0
+    ]
+  },
+  "ids": {
+    "0": "wall",
+    "1": "roof",
+    "2": "column",
+    "3": "door",
+    "4": "window",
+    "5": "floor",
+    "6": "book",
+    "7": "statue",
+    "8": "light",
+    "9": "candle",
+    "10": "curtain",
+    "11": "weapon_display",
+    "12": "frame",
+    "13": "prop",
+    "14": "terrain",
+    "15": "vegetation",
+    "16": "rock",
+    "17": "water",
+    "18": "building",
+    "19": "road",
+    "20": "bridge",
+    "21": "fence",
+    "22": "furniture",
+    "23": "vehicle",
+    "24": "unmodeled"
+  }
+}
