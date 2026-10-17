@@ -35,7 +35,9 @@ jobs:
           python -m pip check
           python -c 'import torch; assert torch.__version__.startswith("2.6.0"); assert torch.version.cuda is None'
       - name: Lint release sources
-        run: ruff check src demo
+        run: ruff check src demo tests
+      - name: Check two-step training and inference
+        run: python -m unittest discover -s tests -v
       - name: Check package and CLI
         run: |
           python -m carve --help

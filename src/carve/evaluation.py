@@ -1,6 +1,18 @@
 """Stable test selection shared by standalone inference and its supervisor."""
 
 
+def validate_inference_checkpoint(cfg, meta):
+    """Match the solver recipe as well as the checkpoint's model contract."""
+    if meta.get("stage") != cfg["stage"]:
+        raise ValueError("Inference config.stage must match the checkpoint stage")
+    if cfg["stage"] == "causal_dmd_sgf":
+        source = meta.get("config", {})
+        if source.get("train", {}).get("denoise_steps") != cfg["train"]["denoise_steps"]:
+            raise ValueError("Stage2 checkpoint denoise_steps must match the inference config")
+        if source.get("runtime", {}).get("experiment_version") != cfg["runtime"]["experiment_version"]:
+            raise ValueError("Stage2 checkpoint experiment_version must match the inference config")
+
+
 def inference_steps(cfg, steps=None):
     """Use the causal solver budget from the training recipe unless overridden."""
     if cfg["stage"] not in {"bidirectional_fm", "causal_tf_anyflow", "causal_dmd_sgf"}:
@@ -35,7 +47,7 @@ def generate_test_sample(core, condition, *, stage, steps, seed, progress=None):
         for index, t in enumerate(schedule.timesteps):
             velocity = core.forward(condition, current, t, mode="bid")
             current = current + (schedule.sigmas[index] - schedule.sigmas[index + 1]) * velocity
-        return current, {"sampling_mode": "bidirectional"}
+        return current, {"sampling_mode": "bidirectional", "denoise_steps": steps}
     if stage not in {"causal_tf_anyflow", "causal_dmd_sgf"} or not core.anyflow:
         raise ValueError("Causal evaluation requires an AnyFlow model")
     from .streaming import CausalSession
@@ -69,6 +81,7 @@ def generate_test_sample(core, condition, *, stage, steps, seed, progress=None):
             progress(timing)
         chunks.append(chunk)
     return torch.cat(chunks, 2), {
+        "denoise_steps": steps,
         "sampling_mode": "causal_sgf" if stage == "causal_dmd_sgf" else "causal_anyflow",
         "conditioning_scope": "current_chunk",
         "chunk_count": count,

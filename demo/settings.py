@@ -6,7 +6,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-VERSION = "v4-colored-uniform-taeh3-tokens608-frozen-proj"
+VERSION = "v4-2step-colored-uniform-taeh3-tokens608-frozen-proj"
+DENOISE_STEPS = 2
 ENV_PATHS = {
     "data_dir": "CWM_DEMO_DATA_DIR",
     "run_config": "CWM_RUN_CONFIG",
@@ -51,7 +52,7 @@ def load_config(path=None, *, overrides=None):
             value = Path(cfg[key]).expanduser()
             cfg[key] = str((path.parent / value).resolve()) if not value.is_absolute() else str(value)
     if cfg.get("version") != VERSION:
-        raise ValueError("Only the released v4 uniform TAEH3 version is supported")
+        raise ValueError("Only the released v4 2-step uniform TAEH3 version is supported")
     if (cfg.get("width"), cfg.get("height"), cfg.get("fps"), cfg.get("chunk_frames")) != (960, 544, 24, 17):
         raise ValueError("Demo geometry must be 960x544, 24 fps, 17-frame chunks")
     if (cfg.get("proxy_width"), cfg.get("proxy_height")) != (608, 352):
@@ -60,8 +61,8 @@ def load_config(path=None, *, overrides=None):
         raise ValueError("Invalid server port")
     if cfg.get("weights") not in {"live", "ema"}:
         raise ValueError("weights must be live or ema")
-    if type(cfg.get("denoise_steps")) is not int or cfg["denoise_steps"] != 4:
-        raise ValueError("v4 demo requires denoise_steps=4")
+    if type(cfg.get("denoise_steps")) is not int or cfg["denoise_steps"] != DENOISE_STEPS:
+        raise ValueError("The released Stage2 demo requires denoise_steps=2")
     if type(cfg.get("seed")) is not int or not 0 <= cfg["seed"] < 2**63:
         raise ValueError("seed must be an integer in [0, 2**63)")
     for key in ("sp_size", "worker_timeout_seconds"):

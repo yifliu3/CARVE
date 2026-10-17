@@ -8,7 +8,7 @@ import torch
 from . import checkpoint
 from .core import Core
 from .data import EncodedDataset
-from .evaluation import generate_test_sample, inference_steps
+from .evaluation import generate_test_sample, inference_steps, validate_inference_checkpoint
 from .model import build, initialize_distributed
 
 
@@ -27,8 +27,7 @@ def run(cfg, args):
     device, rank, _ = initialize_distributed(cfg)
     root, meta = checkpoint.read(args.weights, cfg)
     stage = meta["stage"]
-    if stage != cfg["stage"]:
-        raise ValueError("Inference config.stage must match the checkpoint stage")
+    validate_inference_checkpoint(cfg, meta)
     steps = inference_steps(cfg, args.steps)
     visible_frames = None
     if proxy_video:

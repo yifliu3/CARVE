@@ -28,7 +28,7 @@ def main():
         sub.add_argument("--config", required=True)
         sub.add_argument("--set", action="append", default=[])
         if name == "infer":
-            sub.add_argument("--weights", required=True, help="CARVE checkpoint directory (Stage2)")
+            sub.add_argument("--weights", required=True, help="CARVE checkpoint directory (2-step Stage2)")
             sub.add_argument(
                 "--model-dir", help="Downloaded H3 Ref2VA directory; overrides model.checkpoint",
             )
@@ -42,7 +42,10 @@ def main():
             )
             sub.add_argument("--sample-index", type=int, default=0)
             sub.add_argument("--weight-source", choices=("live", "ema"), default="live")
-            sub.add_argument("--steps", type=int, default=None)
+            sub.add_argument(
+                "--steps", type=int, default=None,
+                help="Denoising steps per chunk; defaults to the config (2 for released Stage2)",
+            )
             sub.add_argument("--output", required=True, help="Empty directory for generated.mp4")
             sub.add_argument(
                 "--decode", action="store_true", default=True,

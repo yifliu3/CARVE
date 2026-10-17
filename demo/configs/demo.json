@@ -1,5 +1,5 @@
 {
-  "version": "v4-colored-uniform-taeh3-tokens608-frozen-proj",
+  "version": "v4-2step-colored-uniform-taeh3-tokens608-frozen-proj",
   "host": "127.0.0.1",
   "port": 8080,
   "data_dir": "../../outputs/demo",
@@ -23,6 +23,6 @@
   "static_sample_id": "",
   "chromium_executable": "",
   "encoder_device": "cuda",
-  "denoise_steps": 4,
+  "denoise_steps": 2,
   "seed": 42
 }

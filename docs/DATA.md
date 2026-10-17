@@ -4,6 +4,10 @@ CARVE uses an appearance reference and semantic proxy video to condition
 generation. Target video provides supervision during training. A matching
 preencoded dataset can be used directly.
 
+The final Stage2 uses two-step SGF for training rollouts and inference. All
+three stages share the same v4 visual encoding, semantic palette and scene
+splits described below, so existing completed v4 datasets can be reused.
+
 ## Raw inputs
 
 Each raw trajectory is represented by two rows sharing `source_sample_id`.
@@ -168,3 +172,11 @@ Checkpoint identity includes the pinned encoder, all visual roles, normalization
 reference policy and frozen shared projection. Initialization and resume require
 the same v4 model contract. Exact resume also requires the original split and
 proxy variant selection.
+
+The two-step Stage2 experiment is identified as
+`v4-2step-colored-uniform-taeh3-tokens608-frozen-proj`. It shares the model
+contract with the earlier v4 stages, allowing LIVE Stage1 student initialization
+and LIVE Stage0.5 teacher/critic initialization. The denoising budget is recorded
+as `train.denoise_steps: 2` in checkpoint configuration. Exact resume requires
+that same recipe; inference and the demo check the Stage2 checkpoint recipe
+against their configuration in addition to the model contract.

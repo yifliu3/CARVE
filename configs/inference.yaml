@@ -1,8 +1,11 @@
 schema: cwm-h3.run.v1
 stage: causal_dmd_sgf
+train:
+  denoise_steps: 2
 data:
   split: test
   visual_encoder: taeh3
   proxy_variant: mixed
 runtime:
+  experiment_version: v4-2step-colored-uniform-taeh3-tokens608-frozen-proj
   output_dir: outputs/inference

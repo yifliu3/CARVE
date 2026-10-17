@@ -9,9 +9,8 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     __package__ = "demo"
 
-from .settings import ROOT, VERSION, load_config, read
+from .settings import DENOISE_STEPS, ROOT, VERSION, load_config, read
 
-CAUSAL_STAGES = {"causal_tf_anyflow", "causal_dmd_sgf"}
 PROXY_SHAPE = (24, 5, 22, 38)
 OUTPUT_SIZE = (34, 60)
 
@@ -45,9 +44,11 @@ def validate_release_config(cfg):
     if data.get("visual_encoder") != "taeh3":
         raise ValueError("v4 requires uniform TAEH3 for reference/proxy/target")
     if cfg["runtime"].get("experiment_version") != VERSION:
-        raise ValueError("Run config must identify the exact released v4 version")
-    if cfg["train"]["denoise_steps"] != 4:
-        raise ValueError("v4 demo requires four denoising steps")
+        raise ValueError("Run config must identify the released v4 2-step version")
+    if cfg["stage"] != "causal_dmd_sgf":
+        raise ValueError("The released demo requires a Stage2 causal SGF run config")
+    if cfg["train"]["denoise_steps"] != DENOISE_STEPS:
+        raise ValueError("The released Stage2 demo requires two denoising steps")
 
 
 def inspect_checkpoint(path, cfg):
@@ -59,14 +60,16 @@ def inspect_checkpoint(path, cfg):
     meta = read(marker)
     if meta.get("schema") != "cwm-h3.checkpoint.v1":
         raise ValueError("Not a completed CARVE checkpoint")
-    if meta.get("stage") not in CAUSAL_STAGES:
-        raise ValueError("Stage0.5 is bidirectional: supply matching TF/AnyFlow/DMD weights")
+    if meta.get("stage") != "causal_dmd_sgf":
+        raise ValueError("Supply a matching Stage2 2-step causal SGF checkpoint")
     if meta.get("config", {}).get("runtime", {}).get("experiment_version") != VERSION:
-        raise ValueError("Checkpoint provenance does not identify the released v4 token version")
+        raise ValueError("Checkpoint provenance does not identify the released v4 2-step version")
     validate_release_config(cfg)
     import_core()
     from carve.config import model_contract
+    from carve.evaluation import validate_inference_checkpoint
 
+    validate_inference_checkpoint(cfg, meta)
     if meta.get("contract") != model_contract(cfg):
         raise ValueError("Checkpoint base/conditioning/projection/LoRA contract differs")
     if meta.get("anyflow") is not True:
@@ -191,9 +194,12 @@ class TokenRuntime:
         condition = load_static(static_path, self.cfg, manifest=manifest, sample_id=sample_id).to(self.device)
         self.session = CausalSession(self.core, condition, seed=self.cfg["train"]["seed"])
 
-    def generate(self, encoded_current, *, steps=4, cancelled=None):
+    def generate(self, encoded_current, *, steps=None, cancelled=None):
         if self.session is None:
             raise ValueError("Start a session with its matching static condition first")
+        steps = self.cfg["train"]["denoise_steps"] if steps is None else steps
+        if type(steps) is not int or steps != DENOISE_STEPS:
+            raise ValueError("The released Stage2 demo requires steps=2")
         self.session.propose_token_chunk(
             validate_current(encoded_current).to(self.device).float(),
             steps=steps, sgf=self.meta["stage"] == "causal_dmd_sgf", cancelled=cancelled,
@@ -373,8 +379,8 @@ def main():
                 raise ValueError("Supply a matching causal checkpoint, not Stage0.5 weights")
             runtime = None
             try:
-                if args.steps is not None and args.steps != 4:
-                    raise ValueError("v4 demo requires --steps 4")
+                if args.steps is not None and args.steps != DENOISE_STEPS:
+                    raise ValueError("The released Stage2 demo requires --steps 2")
                 seed = demo["seed"] if args.seed is None else args.seed
                 if not 0 <= seed < 2**63:
                     raise ValueError("--seed must be in [0, 2**63)")

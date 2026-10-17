@@ -239,7 +239,7 @@ def _dmd_score_condition(condition, score_condition):
     return score_condition
 
 
-def dmd_student_loss(student, teacher, critic, condition, *, seed, steps=4, score_condition=None):
+def dmd_student_loss(student, teacher, critic, condition, *, seed, steps=2, score_condition=None):
     score_condition = _dmd_score_condition(condition, score_condition)
     exit_index = int(torch.randint(steps, (), device=condition.device))
     rollout = student.rollout(condition, steps=steps, seed=seed, sgf=True, exit_index=exit_index)
@@ -258,7 +258,7 @@ def dmd_student_loss(student, teacher, critic, condition, *, seed, steps=4, scor
     return sgf_student_loss(output, gradient)
 
 
-def dmd_critic_loss(student, critic, condition, *, seed, steps=4, score_condition=None):
+def dmd_critic_loss(student, critic, condition, *, seed, steps=2, score_condition=None):
     score_condition = _dmd_score_condition(condition, score_condition)
     with torch.no_grad():
         rollout = student.rollout(condition, steps=steps, seed=seed, sgf=True)

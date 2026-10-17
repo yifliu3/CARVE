@@ -6,12 +6,14 @@ checkpoint:
   initialize_weights: live
   teacher_weights: live
 train:
+  denoise_steps: 2
   max_steps: 1000
   learning_rate: 0.000002
   weight_decay: 0.0
   grad_clip: 10.0
   warmup_steps: 0
 runtime:
+  experiment_version: v4-2step-colored-uniform-taeh3-tokens608-frozen-proj
   optimizer_state_offload: true
   output_dir: outputs/stage2
   tensorboard_dir: outputs/tensorboard/stage2

@@ -34,7 +34,7 @@ function sync() {
 async function refresh() {
  health = await api('/api/health');
  $('status').classList.remove('error');
- $('status').textContent = health.preview ? 'Preview only' : `v4 ${health.stage === 'causal_dmd_sgf' ? 'SGF' : 'AnyFlow'} / ${health.weights.toUpperCase()}`;
+ $('status').textContent = health.preview ? 'Preview only' : `${health.denoise_steps}-step SGF / ${health.weights.toUpperCase()}`;
  sync();
 }
 async function load(id) {

@@ -97,6 +97,7 @@ class DemoState:
             "configured_static": bool(self.cfg.get("static_condition")),
             "stage": None if self.run_config is None else self.run_config["stage"],
             "weights": self.cfg["weights"],
+            "denoise_steps": self.cfg["denoise_steps"],
             "visual_encoder": "taeh3", "visual_decoder": "taeh3",
             "proxy_conditioning": "tae_tokens", "proxy_rgb": [352, 608],
             "encoded_current": [1, 24, 5, 22, 38], "output_size": [34, 60],
@@ -270,6 +271,7 @@ class DemoState:
         write(out / "trajectory.json", trajectory)
         write(out / "result.json", {
             "version": VERSION, "operation": operation, "scene": sid, "blocks": result,
+            "denoise_steps": self.cfg["denoise_steps"] if operation == "generate" else None,
             "frames": len(trajectory["poses"]), "video_decoded": decoded,
             "padding_is_not_published": True,
             "visual_decoder": "taeh3",
